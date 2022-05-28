@@ -1,3 +1,3 @@
 #!/bin/sh
 clear;
-gcc main.c && ./a.out;
+gcc client.c && ./a.out;

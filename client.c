@@ -27,7 +27,7 @@ int main(int argc, char* argv)
     printf("Enter a message to send to the server: ");
     scanf("%s", buffer);
     // Send to the server.
-    send_all(client_fd, buffer, 10);
+    send_all(client_fd, buffer);
     // Close the connection.
     close(client_fd);
     return 0;

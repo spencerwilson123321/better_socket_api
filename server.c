@@ -27,7 +27,7 @@ int main(int argc, char* argv)
     
     // receive data
     memset(buffer, 0, BUFLEN);
-    recv_all(client_fd, buffer, BUFLEN);
+    recv_all(client_fd, buffer);
     printf("Received: %s\n", buffer);
     
     

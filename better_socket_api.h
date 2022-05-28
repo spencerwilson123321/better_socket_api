@@ -96,9 +96,11 @@ void client_connect(int client_fd, struct sockaddr_in* server_addr)
 /*
     This function can be treated like a basic send function, it ensures that all
     data in the given buffer is sent to the destination.
+    Stream sockets only.
 */
-void send_all(int sockfd, char buffer[], int buflen)
+void send_all(int sockfd, char buffer[])
 {
+    int buflen = sizeof((char*)buffer)/sizeof(char);
     char* buff_ptr = buffer;
     while (buflen > 0)
     {
@@ -114,10 +116,13 @@ void send_all(int sockfd, char buffer[], int buflen)
 }
 
 /*
-    
+    This function can be used as the default recv call, it 
+    ensures that all of the data in the buffer is read.
+    This is specific to stream sockets only.
 */
-int recv_all(int sockfd, char buffer[], int buflen)
+int recv_all(int sockfd, char buffer[])
 {
+    int buflen = sizeof((char*)buffer)/sizeof(char);
     char* bptr = buffer;
     int bytes_to_read = buflen;
     while (bytes_to_read > 0)

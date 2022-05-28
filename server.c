@@ -17,7 +17,7 @@ int main(int argc, char* argv)
     // Create main server socket.
     int server_fd = create_ipv4_socket(1);
     // Create main server socket address structure.
-    create_ipv4_address(&server_sai, ip, port);
+    assign_ipv4_address(&server_sai, ip, port);
     // Bind and listen for incoming connections.
     bind_socket(server_fd, &server_sai);
     server_listen(server_fd, BACKLOG);

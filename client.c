@@ -17,7 +17,7 @@ int main(int argc, char* argv)
     client_fd = create_ipv4_socket(1);
     
     // Create the server address structure.
-    create_ipv4_address(&server_sai, server_ip, server_port);
+    assign_ipv4_address(&server_sai, server_ip, server_port);
     
     // Connect to the server.
     client_connect(client_fd, &server_sai);

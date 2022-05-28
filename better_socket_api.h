@@ -35,7 +35,7 @@ int create_ipv4_socket(int reusable)
     Given a pointer to a sockaddr_in struct, fill the fields with the given
     ip and port values.
 */
-void create_ipv4_address(struct sockaddr_in* address_pointer, char* ip, int port)
+void assign_ipv4_address(struct sockaddr_in* address_pointer, char* ip, int port)
 {
     (*address_pointer).sin_family = AF_INET;
     (*address_pointer).sin_port = htons(port);

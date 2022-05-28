@@ -1,6 +1,7 @@
 #include "better_socket_api.h"
 
 #define BACKLOG 5
+#define BUFLEN 1024
 
 int main(int argc, char* argv)
 {
@@ -11,6 +12,7 @@ int main(int argc, char* argv)
     // Defining the server and client address struct.
     struct sockaddr_in server_sai, client_sai;
     int client_fd;
+    char buffer[BUFLEN];
 
     // Create main server socket.
     int server_fd = create_ipv4_socket(1);
@@ -23,7 +25,10 @@ int main(int argc, char* argv)
     client_fd = server_accept(server_fd, &client_sai);
     printf("Client file descriptor: %d\n", client_fd);
     
-    // Read data and echo back.
+    // receive data
+    memset(buffer, 0, BUFLEN);
+    recv_all(client_fd, buffer, BUFLEN);
+    printf("Received: %s\n", buffer);
     
     
     // Close file descriptors when done with them.

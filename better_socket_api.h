@@ -1,8 +1,9 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
-#include<netinet/in.h>
-#include<sys/socket.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
 #include <arpa/inet.h>
 
 
@@ -96,46 +97,36 @@ void client_connect(int client_fd, struct sockaddr_in* server_addr)
     This function can be treated like a basic send function, it ensures that all
     data in the given buffer is sent to the destination.
 */
-int send_all(int sockfd, const void* b)
+void send_all(int sockfd, char buffer[], int buflen)
 {
-    int bytes_sent;
-    const char* buffer = b;
-    int length = strlen(buffer);
-    while (length > 0)
+    char* buff_ptr = buffer;
+    while (buflen > 0)
     {
-        bytes_sent = send(sockfd, buffer, length, 0);
-        if (bytes_sent <= 0)
+        int i = send(sockfd, buff_ptr, buflen, 0);
+        if (i < 0) 
         {
-            return -1;
+            perror("fail");
+            exit(1);
         }
-        buffer += bytes_sent;
-        length -= bytes_sent;
+        buff_ptr += i;
+        buflen -= i;
     }
-    return 0;
 }
 
 /*
-    This function can be treated like a basic recv function. It ensures that all of
-    the data is read from the receive buffer. Returns -1 for failure, 0 for closed connection,
-    and 1 for successful recv.
+    
 */
-int recv_all(int sockfd, const void* b)
+int recv_all(int sockfd, char buffer[], int buflen)
 {
-    int bytes_read;
-    const char* buffer = b;
-    int length = strlen(buffer);
-    int total = 0;
-    while ((bytes_read = recv(sockfd, buffer, length-total, 0)) > 0)
+    char* bptr = buffer;
+    int bytes_to_read = buflen;
+    while (bytes_to_read > 0)
     {
-        total += bytes_read;
-    }
-    if (bytes_read == -1)
-    {
-        return -1;
-    }
-    else if (bytes_read == 0)
-    {
-        return 0;
+        int i = recv(sockfd, bptr, buflen, 0);
+        if (i < 0) return -1;
+        if (i == 0) return 0;
+        bptr += i;
+        bytes_to_read -= i;
     }
     return 1;
 }

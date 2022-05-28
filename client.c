@@ -23,16 +23,11 @@ int main(int argc, char* argv)
     client_connect(client_fd, &server_sai);
     
     // User input
-    char* input;
+    memset(buffer, 0, BUFLEN);
     printf("Enter a message to send to the server: ");
-    scanf("%s", input);
-    
+    scanf("%s", buffer);
     // Send to the server.
-    
-    
-    // Receive response from server.
-    
-    
+    send_all(client_fd, buffer, 10);
     // Close the connection.
     close(client_fd);
     return 0;
